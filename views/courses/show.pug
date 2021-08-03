@@ -1,0 +1,23 @@
+extends ../layout
+block content
+  h1 Nos Cours
+    |=course.title
+  table 
+    tr 
+      th Titre
+        td=course.title
+    tr 
+      th Description
+        td=course.description
+    tr 
+      th Max Students
+        td=course.maxStudents
+    tr 
+      th Cost
+        td=course.cost
+  div 
+    a(href=`/courses/${course._id}/edit`) Edition details 
+  div 
+    a(href=`/courses/${course._id}/delete` onclick='return confirm('Are you sure')) Suppression
+  div 
+    a(href="/courses/") Voir tous les cours 

@@ -1,0 +1,15 @@
+extends ../layout
+block content
+  div
+    form(action="/courses/create" method="post")
+      h2 Creation d'un nouveau cours 
+      label(for="inputTitle") Titre:
+      input#inputTitle(type="text", name="title" placeholder="Titre" autofocus)
+      label(for="inputDescription") Description:
+      input#inputDescrirption(type="text", name="description" placeholder="Description" )
+      label(for="inputMaxStudents") Max Etudiants: 
+      input#inputMaxStudents(type="text", name="maxStudents" placeholder="Max Etudiants" required="required")
+      label(for="inputCost") Coût: 
+      input#inputCost(type="text", name="cost" placeholder="Coût" required="required" pattern="\d*")
+      br
+      button(type="submit") Enregister 

@@ -5,7 +5,7 @@ const courseSchema = new Schema(
   {
     title: { type: String, required: true, unique: true },
     description: { type: String, required: true },
-    maxStudensts: {
+    maxStudents: {
       type: Number,
       default: 0,
       min: [

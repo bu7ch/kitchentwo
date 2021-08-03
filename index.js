@@ -6,7 +6,7 @@ router = express.Router();
 
 
 app.set('view engine', 'pug');
-app.set('view', "/views")
+app.set('views', "./views")
 router.use(express.static('public'));
 router.use(express.urlencoded({ extended: false}));
 router.use(express.json());

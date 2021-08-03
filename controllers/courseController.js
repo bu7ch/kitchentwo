@@ -3,7 +3,7 @@ const Course = require("../models/course");
 exports.index = (req, res, next) => {
   Course.find()
     .then((courses) => {
-      courses;
+      res.render("courses/index", { courses: courses });
       next();
     })
     .catch((error) => {

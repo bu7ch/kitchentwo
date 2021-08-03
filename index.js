@@ -5,6 +5,11 @@ coursesController = require('./controllers/courseController'),
 router = express.Router();
 
 
+app.set('view engine', 'pug');
+app.set('view', "/views")
+router.use(express.static('public'));
+router.use(express.urlencoded({ extended: false}));
+router.use(express.json());
 
 
 router.get('/courses', coursesController.index);

@@ -28,15 +28,16 @@ exports.new = (req, res, next) => {
   res.render("users/new");
 };
 exports.create = (req, res, next) => {
+  if (req.skip) return next();
   let newUser = new User(getUserParams(req.body));
-  User.create(newUser, req.body.password, (e, user) => {
+  newUser.save(req.body.password, (e, user) => {
     if (user) {
-      req.flash("success", `${user.fullName}'s account created successfully`);
+      req.flash("success", `${user.fullName}'s account created successfully!`);
       res.redirect("/users");
       next();
     } else {
-      req.flash("error", `Failed to create user account because ${e.message}`);
-      res.redirect("/users/new");
+      req.flash("error", `Failed to create user account because: ${e.message}.`);
+      res.locals.redirect = "/users/new";
       next();
     }
   });
@@ -130,3 +131,9 @@ exports.authenticate = passport.authenticate("local", {
   successRedirect: "/",
   successFlash: "Connecté !",
 });
+exports.logout = (req, res, next) => {
+  req.logout();
+  req.flash("success", "vous êtes deconnecté!");
+  res.redirect("/");
+  next();
+};

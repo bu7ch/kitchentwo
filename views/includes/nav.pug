@@ -10,3 +10,19 @@
       span.button Contact
     a(href="/users")
       span.button Utilisateurs
+  .login 
+    if(loggedIn)
+      p Connecté en tant que 
+        a(href=`/users/${currentUser._id}`) #{currentUser.fullName}
+        span.log-out
+          a(href="/users/logout") Deconnexion  
+    else 
+      a(href="/users/login") Connexion 
+  .flashes 
+    if(flashMessages)
+      if(flashMessages.success)
+        .flash.success 
+          #{flashMessages.success}
+      else if(flashMessages.error)
+        .flash.error
+          #{flashMessages.error}

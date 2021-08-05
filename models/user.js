@@ -24,7 +24,7 @@ userSchema.virtual("fullName").get(function () {
   return `${this.name.first} ${this.name.last}`;
 });
 
-userSchema.pre("save", function () {
+userSchema.pre("save", function (next) {
   let user = this;
   bcrypt
     .hash(user.password, 10)
@@ -32,9 +32,9 @@ userSchema.pre("save", function () {
       user.password = hash;
       next();
     })
-    .catch((err) => {
-      console.log(`Error hashing password: ${err.message}`);
-      next(err);
+    .catch((error) => {
+      console.log(`Error in hashing password: ${error.message}`);
+      next(error);
     });
 });
 

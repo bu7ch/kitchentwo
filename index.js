@@ -2,7 +2,9 @@ const express = require("express"),
   app = express(),
   port = process.env.PORT || 5000,
   coursesController = require("./controllers/courseController"),
-  subscriberController = require("./controllers/subsciberController");
+  subscriberController = require("./controllers/subsciberController"),
+  userController = require("./controllers/userController");
+
 router = express.Router();
 const mongoose = require("mongoose");
 const dbURL = "mongodb://localhost:27017/";
@@ -36,6 +38,14 @@ router.get("/subscribers/:id", subscriberController.show);
 router.get("/subscribers/:id/edit", subscriberController.edit);
 router.post("/subscribers/:id/update", subscriberController.update);
 router.get("/subscribers/:id/delete", subscriberController.delete);
+
+router.get("/users", userController.index);
+router.get("/users/new", userController.new);
+router.post("/users/create", userController.create);
+router.get("/users/:id", userController.show);
+router.get("/users/:id/edit", userController.edit);
+router.post("/users/:id/update", userController.update);
+router.get("/users/:id/delete", userController.delete);
 
 app.use("/", router);
 

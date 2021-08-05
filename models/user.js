@@ -14,8 +14,8 @@ const userSchema = new Schema(
     email: { type: String, required: true, lowercase: true, unique: true },
     zipCode: { type: Number, min: [10000, "ZipCode trop court"], max: 99999 },
     password: { type: String, required: true },
+    courses: [{ type: Schema.Types.ObjectId, ref: "Course" }],
     subscribedAccount: { type: Schema.Types.ObjectId, ref: "Subscriber" },
-    course: [{ type: Schema.Types.ObjectId, ref: "Course" }],
   },
   { timestamps: true }
 );
@@ -23,6 +23,25 @@ const userSchema = new Schema(
 userSchema.virtual("fullName").get(function () {
   return `${this.name.first} ${this.name.last}`;
 });
+
+userSchema.pre("save", function () {
+  let user = this;
+  bcrypt
+    .hash(user.password, 10)
+    .then((hash) => {
+      user.password = hash;
+      next();
+    })
+    .catch((err) => {
+      console.log(`Error hashing password: ${err.message}`);
+      next(err);
+    });
+});
+
+userSchema.methods.passwordComparaison = function (inputPassword) {
+  let user = this;
+  return bcrypt.compare(inputPassword, user.password);
+};
 
 userSchema.pre("save", function (next) {
   let user = this;

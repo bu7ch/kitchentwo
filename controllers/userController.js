@@ -1,5 +1,6 @@
 const User = require("../models/user"),
   passport = require("passport"),
+  validator = require("validator"),
   getUserParams = (body) => {
     return {
       name: {
@@ -92,3 +93,40 @@ exports.delete = (req, res, next) => {
       next();
     });
 };
+
+exports.login = (req, res) => {
+  res.render("users/login");
+};
+
+// exports.validate = (req, res, next) => {
+//   validator.isEmail(req.body.email);
+//   // req
+//   //   .body("zipCode", "Code postal est invalide")
+//   //   .isNumeric()
+//   //   .isLength({
+//   //     min: 5,
+//   //     max: 5,
+//   //   })
+//     validator.equals(req.body.zipCode);
+
+//   // req.body("password", "Le password ne peut pas être vide").notEmpty();
+
+//   // req.validationResult().then((err) => {
+//   //   if (!err.isEmpty()) {
+//   //     let messages = err.array().map((e) => e.message);
+//   //     req.skip = true;
+//   //     req.flash("error", messages.join(" and "));
+//   //     res.redirect("/users/new");
+//   //     next();
+//   //   } else {
+//   //     next();
+//   //   }
+//   // });
+// };
+
+exports.authenticate = passport.authenticate("local", {
+  failureRedirect: "/users/login",
+  failureFlash: "Erreur de connexion",
+  successRedirect: "/",
+  successFlash: "Connecté !",
+});

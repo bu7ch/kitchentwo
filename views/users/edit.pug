@@ -1,0 +1,17 @@
+extends ../layout
+block content
+  .data-form 
+    form.form-signin(action=`/users/${user._id}/update` method="post")
+      h2.form-signin-heading Edition d'un utilisateur
+      label(for="inputFirst") FirstName:
+      input.form-control(type="text", name="first" id="inputFirst" value=`#{user.name.first}` placeholder="Name" autofocus)
+      label(for="inputLast") LastName:
+      input.form-control(type="text", name="last" id="inputLast" value=`#{user.name.last}` placeholder="Name")
+      label(for="inputEmail") Adresse email :
+      input.form-control(type="email", name="email" id="inputEmail" value=`#{user.email}` placeholder="Adresse email " )
+      label(for="inputPassowrd") Mot de passe  :
+      input.form-control(type="password", name="password" id="inputPassowrd" value=`#{user.password}` placeholder="Mot de passe" )
+      label(for="inputZipCode") zipCode: 
+      input.form-control(type="text", name="zipCode" id="inputZipCode" value=`#{user.zipCode}` placeholder="code postal" required="required", pattern="[0-9]{5}")
+      br
+      button.btn.btn-lg.btn-primary.btn-block(type="submit") Mise à jour 

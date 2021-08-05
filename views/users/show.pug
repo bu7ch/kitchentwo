@@ -1,0 +1,26 @@
+extends ../layout
+block content
+  h1 Nos données pour un utilisateur :
+    |#{user.fullName}
+  table 
+    tr 
+      th Nom
+        td=user.fullName
+    tr 
+      th Adresse email
+        td=user.email 
+    tr 
+      th Code Postal
+        td=user.zipCode 
+    tr 
+      th Mot de passe
+        td **********
+  if(user.subscribedAccount != undefined)
+    h4.center Cet Utilisateur à un 
+      a.button(href=`/subscribers/${user.subscribedAccount}`) compte
+  div.center 
+    a(href=`/users/${user._id}/edit`) Edition details 
+  div.center
+    a.button(href=`/users/${user._id}/delete` onclick="return confirm('Are you sure')") Suppression
+  div.center
+    a.button(href="/users/") Voir tous les utilisateurs 

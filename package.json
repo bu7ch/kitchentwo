@@ -9,8 +9,11 @@
   "author": "roro-senseï & jacko",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "mongoose": "^5.13.5",
+    "passport": "^0.4.1",
+    "passport-local-mongoose": "^6.1.0",
     "pug": "^3.0.2"
   },
   "devDependencies": {

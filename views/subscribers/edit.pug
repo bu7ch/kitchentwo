@@ -1,0 +1,13 @@
+extends ../layout
+block content
+  .data-form 
+    form.form-signin(action=`/subscribers/${subscriber._id}/update` method="post")
+      h2.form-signin-heading Edition d'un inscrit 
+      label(for="inputName") Nom:
+      input.form-control(type="text", name="name" id="inputName" value=`${subscriber.name}` placeholder="Nom" autofocus)
+      label(for="inputEmail") Adresse email:
+      input.form-control(type="email", name="email" id="inputEmail" value=`${subscriber.email}` placeholder="Adresse email" )
+      label(for="inputZipCode") Code postal : 
+      input.form-control(type="text", name="zipCode" id="inputZipCode" value=`${subscriber.zipCode}` placeholder="Code postal " required="required")
+      br
+      button.btn.btn-lg.btn-primary.btn-block(type="submit") Mise à jour 

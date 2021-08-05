@@ -1,0 +1,20 @@
+extends ../layout
+block content 
+  h2.center  Tableau des inscrits :
+  table.table 
+    thead
+      tr 
+        th Name
+        th Email 
+        th Edition
+        th Suppression
+    tbody
+      each subscriber in subscribers 
+        tr 
+          td 
+            a(href=`/subscribers/${subscriber._id}`)=subscriber.name 
+          td=subscriber.email 
+          td 
+            a(href=`/subscribers/${subscriber._id}/edit`) Edition 
+          td 
+            a(href=`/subscribers/${subscriber._id}/delete?_method=DELETE` onclick="return confirm('Êtes-vous sure de vouloir supprimer?')") Suppression

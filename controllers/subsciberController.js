@@ -29,6 +29,7 @@ exports.create = (req, res, next) => {
   Subscriber.create(newSubscriber)
     .then((subscriber) => {
       subscriber;
+      res.redirect("/subscribers");
       next();
     })
     .catch((err) => {
@@ -41,7 +42,7 @@ exports.show = (req, res, next) => {
   let subscriberId = req.params.id;
   Subscriber.findById(subscriberId)
     .then((subscriber) => {
-      subscriber;
+      res.render("subscribers/show", { subscriber: subscriber });
       next();
     })
     .catch((error) => {
@@ -65,7 +66,7 @@ exports.update = (req, res, next) => {
   let subscriberId = req.params.id;
   Subscriber.findByIdAndUpdate(subscriberId, { $set: req.body })
     .then((subscriber) => {
-      res.render(`subscribers/${subscriberId}`, { subscriber: subscriber });
+      res.render(`/subscribers`);
       next();
     })
     .catch((error) => {

@@ -30,13 +30,16 @@ exports.new = (req, res, next) => {
 exports.create = (req, res, next) => {
   if (req.skip) return next();
   let newUser = new User(getUserParams(req.body));
-  newUser.save(req.body.password, (e, user) => {
+  User.register(newUser, req.body.password, (e, user) => {
     if (user) {
       req.flash("success", `${user.fullName}'s account created successfully!`);
       res.redirect("/users");
       next();
     } else {
-      req.flash("error", `Failed to create user account because: ${e.message}.`);
+      req.flash(
+        "error",
+        `Failed to create user account because: ${e.message}.`
+      );
       res.locals.redirect = "/users/new";
       next();
     }
@@ -50,8 +53,8 @@ exports.show = (req, res, next) => {
       next();
     })
     .catch((err) => {
-      console.log(`Error fetching user ID: ${error.message}`);
-      next();
+      console.log(`Error fetching user ID: ${err.message}`);
+      next(err);
     });
 };
 
@@ -63,8 +66,8 @@ exports.edit = (req, res, next) => {
       next();
     })
     .catch((err) => {
-      console.log(`Error fetching user ID: ${error.message}`);
-      next();
+      console.log(`Error fetching user ID: ${err.message}`);
+      next(err);
     });
 };
 
@@ -77,8 +80,8 @@ exports.update = (req, res, next) => {
       next();
     })
     .catch((err) => {
-      console.log(`Error updating user ID: ${error.message}`);
-      next();
+      console.log(`Error updating user ID: ${err.message}`);
+      next(err);
     });
 };
 
@@ -90,8 +93,8 @@ exports.delete = (req, res, next) => {
       next();
     })
     .catch((err) => {
-      console.log(`Error deleteing user ID: ${error.message}`);
-      next();
+      console.log(`Error deleteing user ID: ${err.message}`);
+      next(err);
     });
 };
 

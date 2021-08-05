@@ -6,7 +6,8 @@ const express = require("express"),
   cookieParser = require("cookie-parser"),
   coursesController = require("./controllers/courseController"),
   subscriberController = require("./controllers/subsciberController"),
-  userController = require("./controllers/userController");
+  userController = require("./controllers/userController"),
+  homeController = require("./controllers/homeController");
 User = require("./models/user");
 
 router = express.Router();
@@ -49,11 +50,13 @@ passport.deserializeUser(User.deserializeUser());
 
 router.use((req, res, next) => {
   res.locals.loggedIn = req.isAuthenticated();
+  console.log(res.locals.loggedIn);
   res.locals.currentUser = req.user;
   res.locals.flashMessages = req.flash();
   next();
 });
 
+router.get("/", homeController.index);
 router.get("/courses", coursesController.index);
 router.get("/courses/new", coursesController.new);
 router.post("/courses/create", coursesController.create);
@@ -76,6 +79,7 @@ router.post("/users/create", userController.create);
 
 router.get("/users/login", userController.login);
 router.post("/users/login", userController.authenticate);
+router.get("/users/logout", userController.logout);
 router.get("/users/:id", userController.show);
 router.get("/users/:id/edit", userController.edit);
 router.post("/users/:id/update", userController.update);

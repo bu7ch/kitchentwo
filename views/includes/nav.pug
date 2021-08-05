@@ -22,7 +22,7 @@
     if(flashMessages)
       if(flashMessages.success)
         .flash.success 
-          #{flashMessages.success}
+          p #{flashMessages.success}
       else if(flashMessages.error)
         .flash.error
-          #{flashMessages.error}
+          p #{flashMessages.error}

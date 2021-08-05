@@ -1,20 +1,20 @@
 extends ../layout
 block content 
-  h2 Tableau des cours :
-  table 
-  thead
-    tr 
-      th Titre
-      th Description
-      th Edition
-      th Suppression
-  tbody
-    each course in courses 
-    tr 
-      td 
-        a(href=`/courses/${course._id}`)=course.title 
-      td=course.description 
-      td 
-        a(href=`/courses/${course._id}/edit`) Edition 
-      td 
-        a(href=`/courses/${course._id}/delete?_method=DELETE` onclick="return confirm('Êtes-vous sure de vouloir supprimer?')") 
+  h2.center  Tableau des cours :
+  table.table 
+    thead
+      tr 
+        th Titre
+        th Description
+        th Edition
+        th Suppression
+    tbody
+      each course in courses 
+        tr 
+          td 
+            a(href=`/courses/${course._id}`)=course.title 
+          td=course.description 
+          td 
+            a(href=`/courses/${course._id}/edit`) Edition 
+          td 
+            a(href=`/courses/${course._id}/delete?_method=DELETE` onclick="return confirm('Êtes-vous sure de vouloir supprimer?')") Suppression

@@ -1,0 +1,15 @@
+extends ../layout
+block content
+  .data-form 
+    form.form-signin(action=`/courses/${course._id}/update` method="post")
+      h2.form-signin-heading Edition du cours 
+      label(for="inputTitle") Titre:
+      input.form-control(type="text", name="title" id="inputTitle" value=`${course.title}` placeholder="Titre" autofocus)
+      label(for="inputDescription") Description:
+      input.form-control(type="text", name="description" id="inputDescrirption" value=`${course.description}` placeholder="Description" )
+      label(for="inputMaxStudents") Max Etudiants: 
+      input.form-control(type="text", name="maxStudents" id="inputMaxStudents" value=`${course.maxStudents}` placeholder="Max Etudiants" required="required")
+      label(for="inputCost") Coût: 
+      input.form-control(type="text", name="cost" id="inputCost" value=`${course.cost}` placeholder="Coût" required="required" )
+      br
+      button.btn.btn-lg.btn-primary.btn-block(type="submit") Mise à jour 

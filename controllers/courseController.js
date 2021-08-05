@@ -31,7 +31,7 @@ exports.show = (req, res, next) => {
   let courseId = req.params.id;
   Course.findById(courseId)
     .then((course) => {
-      course;
+      res.render("courses/show", { course: course });
       next();
     })
     .catch((error) => {

@@ -1,0 +1,13 @@
+extends ../layout
+block content
+  .data-form 
+    form.form-signin(action="/subscribers/create" method="post")
+      h2.form-signin-heading Creation d'un nouveau étudiant
+      label(for="inputName") Nom:
+      input.form-control(type="text", name="name" id="inputName" placeholder="Name" autofocus)
+      label(for="inputEmail") Adresse email :
+      input.form-control(type="email", name="email" id="inputEmail" placeholder="Adresse email " )
+      label(for="inputZipCode") zipCode: 
+      input.form-control(type="text", name="zipCode" id="inputZipCode" placeholder="code postal" required="required", pattern="[0-9]{5}")
+      br
+      button.btn.btn-lg.btn-primary.btn-block(type="submit") Enregister 

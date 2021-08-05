@@ -1,0 +1,21 @@
+extends ../layout
+block content
+  h1 Nos données pour nos inscrit :
+    |#{subscriber.name}
+  table 
+    tr 
+      th Nom
+        td=subscriber.name
+    tr 
+      th Adresse email
+        td=subscriber.email 
+    tr 
+      th Code postal 
+        td=subscriber.zipCode
+  p Cet utilisateur est inscrit à ces cours : #{subscriber.courses.length}
+  div 
+    a(href=`/subscribers/${subscriber._id}/edit`) Edition details 
+  div 
+    a(href=`/courses/${subscriber._id}/delete` onclick="return confirm('Are you sure')") Suppression
+  div 
+    a(href="/subscribers/") Voir tous les inscrits 

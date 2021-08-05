@@ -1,15 +1,15 @@
 extends ../layout
 block content
-  div
-    form(action="/courses/create" method="post")
-      h2 Creation d'un nouveau cours 
+  .data-form 
+    form.form-signin(action="/courses/create" method="post")
+      h2.form-signin-heading Creation d'un nouveau cours 
       label(for="inputTitle") Titre:
-      input#inputTitle(type="text", name="title" placeholder="Titre" autofocus)
+      input.form-control(type="text", name="title" id="inputTitle" placeholder="Titre" autofocus)
       label(for="inputDescription") Description:
-      input#inputDescrirption(type="text", name="description" placeholder="Description" )
+      input.form-control(type="text", name="description" id="inputDescrirption" placeholder="Description" )
       label(for="inputMaxStudents") Max Etudiants: 
-      input#inputMaxStudents(type="text", name="maxStudents" placeholder="Max Etudiants" required="required")
+      input.form-control(type="text", name="maxStudents" id="inputMaxStudents" placeholder="Max Etudiants" required="required")
       label(for="inputCost") Coût: 
-      input#inputCost(type="text", name="cost" placeholder="Coût" required="required" )
+      input.form-control(type="text", name="cost" id="inputCost" placeholder="Coût" required="required" )
       br
-      button(type="submit") Enregister 
+      button.btn.btn-lg.btn-primary.btn-block(type="submit") Enregister 

@@ -3,9 +3,12 @@ const Course = require("../models/course");
 exports.index = (req, res, next) => {
   Course.find()
     .then((courses) => {
-      if (req.query.format === "json") res.json(courses);
-      res.render("courses/index", { courses: courses });
-      next();
+      if (req.query.format === "json") {
+        res.json(courses);
+      } else {
+        res.render("courses/index", { courses: courses });
+        next();
+      }
     })
     .catch((error) => {
       console.log(`Eror fetching courses: ${error.message}`);

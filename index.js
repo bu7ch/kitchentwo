@@ -4,13 +4,9 @@ const express = require("express"),
   connectFlash = require("connect-flash"),
   expressSessions = require("express-session"),
   cookieParser = require("cookie-parser"),
-  coursesController = require("./controllers/courseController"),
-  subscriberController = require("./controllers/subsciberController"),
-  userController = require("./controllers/userController"),
-  homeController = require("./controllers/homeController");
-User = require("./models/user");
+  router = require("./routes/index"),
+  User = require("./models/user");
 
-router = express.Router();
 const mongoose = require("mongoose");
 const passport = require("passport");
 const dbURL = "mongodb://localhost:27017/";
@@ -55,7 +51,6 @@ router.use((req, res, next) => {
   res.locals.flashMessages = req.flash();
   next();
 });
-
 
 app.use("/", router);
 

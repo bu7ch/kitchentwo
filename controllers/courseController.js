@@ -3,6 +3,7 @@ const Course = require("../models/course");
 exports.index = (req, res, next) => {
   Course.find()
     .then((courses) => {
+      if (req.query.format === "json") res.json(courses);
       res.render("courses/index", { courses: courses });
       next();
     })

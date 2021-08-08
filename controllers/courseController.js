@@ -1,4 +1,5 @@
 const Course = require("../models/course");
+const htppStatus = require("http-status-codes");
 
 exports.index = (req, res, next) => {
   Course.find()
@@ -79,3 +80,28 @@ exports.delete = (req, res, next) => {
       next();
     });
 };
+
+exports.respondJSON = (req, res) => {
+  res.json({
+    status: htppStatus.StatusCodes.OK,
+    data: res.locals,
+  });
+};
+
+exports.errorJSON = (req,res, next) => {
+  let errorObject;
+
+  if(error){
+    errorObject = {
+      status: httpStatus.StatusCodes.INTERNAL_SERVER_ERROR,
+      message: error.message
+    }
+  } else {
+    errorObject = {
+      status: httpStatus.StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "Erreur inconnue"
+    }
+  }
+
+  res.json(errorObject);
+}

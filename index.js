@@ -6,6 +6,7 @@ const express = require("express"),
   cookieParser = require("cookie-parser"),
   router = require("./routes/index"),
   User = require("./models/user");
+const apiRoutes = require('./apiRoutes.js');
 
 const mongoose = require("mongoose");
 const passport = require("passport");
@@ -52,7 +53,10 @@ router.use((req, res, next) => {
   next();
 });
 
+router.use('/api', apiRoutes);
+
 app.use("/", router);
+
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);

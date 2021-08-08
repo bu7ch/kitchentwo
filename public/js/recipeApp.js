@@ -18,14 +18,17 @@
 
 const myModal = new bootstrap.Modal(document.getElementById("modal-button"));
 
-$.get("/courses?format=json", (data) => {
+$.get("/api/courses", (results = {}) => {
   if (myModal) {
     myModal.show();
   }
-  data.forEach((course) => {
+  let data = results.data;
+  if(!data || !data.courses) return;
+  data.courses.forEach((course) => {
     $(".modal-body").append(
       `<div>
                   <span class="course-title">${course.title}</span>
+                  <button class='button ${course.joined ? "joined-button" : "join-button"}' data-id="${course._id}"> ${course.joined ? "Participe" : "Rejoindre"} </button>
                   <div class="course-description">${course.description}</div>
                 </div>
                 `

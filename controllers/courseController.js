@@ -4,12 +4,8 @@ const htppStatus = require("http-status-codes");
 exports.index = (req, res, next) => {
   Course.find()
     .then((courses) => {
-      if (req.query.format === "json") {
-        res.json(courses);
-      } else {
-        res.render("courses/index", { courses: courses });
-        next();
-      }
+      res.render("courses/index", { courses: courses });
+      next();
     })
     .catch((error) => {
       console.log(`Eror fetching courses: ${error.message}`);
@@ -88,20 +84,20 @@ exports.respondJSON = (req, res) => {
   });
 };
 
-exports.errorJSON = (req,res, next) => {
+exports.errorJSON = (req, res, next) => {
   let errorObject;
 
-  if(error){
+  if (error) {
     errorObject = {
       status: httpStatus.StatusCodes.INTERNAL_SERVER_ERROR,
-      message: error.message
-    }
+      message: error.message,
+    };
   } else {
     errorObject = {
       status: httpStatus.StatusCodes.INTERNAL_SERVER_ERROR,
-      message: "Erreur inconnue"
-    }
+      message: "Erreur inconnue",
+    };
   }
 
   res.json(errorObject);
-}
+};

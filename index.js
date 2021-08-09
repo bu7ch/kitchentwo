@@ -47,7 +47,6 @@ passport.deserializeUser(User.deserializeUser());
 
 router.use((req, res, next) => {
   res.locals.loggedIn = req.isAuthenticated();
-  console.log(res.locals.loggedIn);
   res.locals.currentUser = req.user;
   res.locals.flashMessages = req.flash();
   next();

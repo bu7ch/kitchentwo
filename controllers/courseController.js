@@ -1,16 +1,21 @@
 const Course = require("../models/course");
 const htppStatus = require("http-status-codes");
+const User = require("../models/user");
 
-exports.index = (req, res, next) => {
-  Course.find()
-    .then((courses) => {
-      res.render("courses/index", { courses: courses });
-      next();
-    })
-    .catch((error) => {
-      console.log(`Eror fetching courses: ${error.message}`);
-      next(error);
-    });
+exports.index = async (req, res, next) => {
+  // Course.find({})
+  //   .then((courses) => {
+  //     res.render("courses/index", { courses: courses });
+  //     res.locals.courses = courses;
+  //     next();
+  try {
+    const courses = await Course.find({});
+    res.render("courses/index", { courses: courses });
+    res.locals.courses = courses;
+  } catch (error) {
+    console.log(`Eror fetching courses: ${error.message}`);
+    next(error);
+  }
 };
 exports.new = (req, res, next) => {
   res.render("courses/new");
@@ -76,14 +81,12 @@ exports.delete = (req, res, next) => {
       next();
     });
 };
-
 exports.respondJSON = (req, res) => {
   res.json({
     status: htppStatus.StatusCodes.OK,
     data: res.locals,
   });
 };
-
 exports.errorJSON = (req, res, next) => {
   let errorObject;
 
@@ -100,4 +103,41 @@ exports.errorJSON = (req, res, next) => {
   }
 
   res.json(errorObject);
+};
+exports.join = (req, res, next) => {
+  let courseId = req.params.id;
+  currentUser = req.user;
+
+  if (currentUser) {
+    User.findByIdAndUpdate(currentUser, {
+      $addToSet: {
+        courses: courseId,
+      },
+    })
+      .then(() => {
+        res.locals.success = true;
+        next();
+      })
+      .catch((err) => {
+        next(err);
+      });
+  } else {
+    next(new Error("User must log in"));
+  }
+};
+
+exports.filterUserCourses = (req, res, next) => {
+  let currentUser = res.locals.currentUser;
+  if (currentUser) {
+    let mappedCourses = res.locals.courses.map((course) => {
+      let userJoined = currentUser.course.some((userCourse) => {
+        return userCourse.equals(course._id);
+      });
+      return Object.assign(course.toObject(), { joined: userJoined });
+    });
+    res.locals.courses = mappedCourses;
+    next();
+  } else {
+    next();
+  }
 };

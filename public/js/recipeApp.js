@@ -18,7 +18,7 @@
 
 const myModal = new bootstrap.Modal(document.getElementById("modal-button"));
 
-$.get("/courses?format=json", (results = {}) => {
+$.get("/api/courses", (results = {}) => {
   if (myModal) {
     myModal.show();
   }

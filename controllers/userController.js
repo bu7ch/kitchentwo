@@ -1,7 +1,7 @@
 const User = require("../models/user"),
   passport = require("passport"),
   validator = require("validator"),
-  getUserParams = (body) => {
+  getUserParams = body => {
     return {
       name: {
         first: body.first,

@@ -2,20 +2,13 @@ const Course = require("../models/course");
 const htppStatus = require("http-status-codes");
 const User = require("../models/user");
 
-exports.index = async (req, res, next) => {
-  // Course.find({})
-  //   .then((courses) => {
-  //     res.render("courses/index", { courses: courses });
-  //     res.locals.courses = courses;
-  //     next();
-  try {
-    const courses = await Course.find({});
-    res.render("courses/index", { courses: courses });
-    res.locals.courses = courses;
-  } catch (error) {
-    console.log(`Eror fetching courses: ${error.message}`);
-    next(error);
-  }
+exports.index =  (req, res, next) => {
+  Course.find({})
+    .then((courses) => {
+      res.locals.courses = courses;
+       next();
+      res.render("courses/index", { courses: courses });
+    })
 };
 exports.new = (req, res, next) => {
   res.render("courses/new");
@@ -86,6 +79,7 @@ exports.respondJSON = (req, res) => {
     status: htppStatus.StatusCodes.OK,
     data: res.locals,
   });
+  console.log(res.locals);
 };
 exports.errorJSON = (req, res, next) => {
   let errorObject;

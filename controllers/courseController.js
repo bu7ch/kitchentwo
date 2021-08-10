@@ -13,8 +13,8 @@ exports.new = (req, res, next) => {
   res.render("courses/new");
 };
 exports.create = (req, res, next) => {
-  let newCourse = new Course(req.body);
-  Course.create(newCourse)
+  const courseParams = new Course(req.body);
+  Course.create(courseParams)
     .then((course) => {
       course;
       res.redirect("/courses");

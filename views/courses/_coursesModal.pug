@@ -1,13 +1,12 @@
 
-
-
-.modal#modal-button(tabindex data-target="#myModal")
-  .modal-dialog#myModal
+      
+#myModal.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
+  .modal-dialog
     .modal-content
       .modal-header
-        h5.modal-title.mx-auto Derniers cours
+        h5#exampleModalLabel.modal-title Derniers Cours
         //- button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
       .modal-body
       .modal-footer
         button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
-      
+        

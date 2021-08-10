@@ -2,13 +2,12 @@ const Course = require("../models/course");
 const htppStatus = require("http-status-codes");
 const User = require("../models/user");
 
-exports.index =  (req, res, next) => {
-  Course.find({})
-    .then((courses) => {
-      res.locals.courses = courses;
-       next();
-      res.render("courses/index", { courses: courses });
-    })
+exports.index = (req, res, next) => {
+  Course.find({}).then((courses) => {
+    res.locals.courses = courses;
+    next();
+    res.render("courses/index", { courses: courses });
+  });
 };
 exports.new = (req, res, next) => {
   res.render("courses/new");

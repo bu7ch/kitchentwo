@@ -3,8 +3,8 @@ const Course = require("../models/course");
 exports.index = (req, res, next) => {
   Course.find()
     .then((courses) => {
-      res.render("courses/index", { courses: courses });
       next();
+      res.render("courses/index", { courses: courses });
     })
     .catch((error) => {
       console.log(`Eror fetching courses: ${error.message}`);

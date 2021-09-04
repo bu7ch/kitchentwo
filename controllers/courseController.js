@@ -13,14 +13,16 @@ exports.new = (req, res, next) => {
   res.render("courses/new");
 };
 exports.create = (req, res, next) => {
-  Course.create({
+  let courseParams = {
     title: req.body.title,
     description: req.body.description,
-  })
+    maxStudents: req.body.maxStudents,
+    cost: req.body.cost,
+  };
+  Course.create(courseParams)
     .then((course) => {
-      res.locals.course = course;
+      course;
       res.redirect("/courses");
-      console.log(course);
       next();
     })
     .catch((error) => {
@@ -101,8 +103,8 @@ exports.errorJSON = (req, res, next) => {
   res.json(errorObject);
 };
 exports.join = (req, res, next) => {
-  let courseId = req.params.id;
-  currentUser = req.user;
+  let courseId = req.params.id,
+    currentUser = req.user;
 
   if (currentUser) {
     User.findByIdAndUpdate(currentUser, {
@@ -126,7 +128,7 @@ exports.filterUserCourses = (req, res, next) => {
   let currentUser = res.locals.currentUser;
   if (currentUser) {
     let mappedCourses = res.locals.courses.map((course) => {
-      let userJoined = currentUser.course.some((userCourse) => {
+      let userJoined = currentUser.courses.some((userCourse) => {
         return userCourse.equals(course._id);
       });
       return Object.assign(course.toObject(), { joined: userJoined });

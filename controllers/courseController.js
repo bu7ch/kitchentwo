@@ -13,11 +13,14 @@ exports.new = (req, res, next) => {
   res.render("courses/new");
 };
 exports.create = (req, res, next) => {
-  const courseParams = new Course(req.body);
-  Course.create(courseParams)
+  Course.create({
+    title: req.body.title,
+    description: req.body.description,
+  })
     .then((course) => {
-      course;
+      res.locals.course = course;
       res.redirect("/courses");
+      console.log(course);
       next();
     })
     .catch((error) => {

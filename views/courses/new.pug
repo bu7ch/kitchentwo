@@ -4,12 +4,12 @@ block content
     form.form-signin(action="/courses/create" method="post")
       h2.form-signin-heading Creation d'un nouveau cours 
       label(for="inputTitle") Titre:
-      input.form-control(type="text", name="title" id="inputTitle" placeholder="Titre" autofocus)
+      input.form-control(type="text", name="title" id="inputTitle" placeholder="Titre" autofocus, required="required")
       label(for="inputDescription") Description:
-      input.form-control(type="text", name="description" id="inputDescrirption" placeholder="Description" )
-      label(for="inputMaxStudents") Max Etudiants: 
-      input.form-control(type="text", name="maxStudents" id="inputMaxStudents" placeholder="Max Etudiants" required="required")
-      label(for="inputCost") Coût: 
-      input.form-control(type="text", name="cost" id="inputCost" placeholder="Coût" required="required" )
+      input.form-control(type="text", name="description" id="inputDescrirption" placeholder="Description", required="required")
+      //- label(for="inputMaxStudents") Max Etudiants: 
+      //- input.form-control(type="text", name="maxStudents" id="inputMaxStudents" placeholder="Max Etudiants" required="required")
+      //- label(for="inputCost") Coût: 
+      //- input.form-control(type="text", name="cost" id="inputCost" placeholder="Coût" required="required" )
       br
       button.btn.btn-lg.btn-primary.btn-block(type="submit") Enregister 

@@ -22,7 +22,7 @@ mongoose
 app.set("view engine", "pug");
 app.set("views", "./views");
 router.use(express.static("public"));
-router.use(express.urlencoded({ extended: true }));
+router.use(express.urlencoded({ extended: false }));
 router.use(express.json());
 router.use(cookieParser("CuisineAdministration"));
 router.use(

@@ -5,11 +5,16 @@
     a(href="/")
       span.button Accueil
     a(href="/courses")
-      span.button Courses
+      span.button Cours de cuisine
     a(href="/subscribers")
       span.button Contact
-    a(href="/users")
-      span.button Utilisateurs
+    // Button trigger modal
+    button.btn.btn-primary(type='button' id ="modal-button" data-bs-toggle='modal' data-bs-target='#myModal')
+      | Derniers Cours
+    include ../courses/_coursesModal
+
+
+
   .login 
     if(loggedIn)
       p Connecté en tant que 

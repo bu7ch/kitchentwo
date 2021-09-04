@@ -1,22 +1,25 @@
 const Course = require("../models/course");
+const htppStatus = require("http-status-codes");
+const User = require("../models/user");
 
 exports.index = (req, res, next) => {
-  Course.find()
-    .then((courses) => {
-      next();
-      res.render("courses/index", { courses: courses });
-    })
-    .catch((error) => {
-      console.log(`Eror fetching courses: ${error.message}`);
-      next(error);
-    });
+  Course.find({}).then((courses) => {
+    res.locals.courses = courses;
+    next();
+    res.render("courses/index", { courses: courses });
+  });
 };
 exports.new = (req, res, next) => {
   res.render("courses/new");
 };
 exports.create = (req, res, next) => {
-  let newCourse = new Course(req.body);
-  Course.create(newCourse)
+  let courseParams = {
+    title: req.body.title,
+    description: req.body.description,
+    maxStudents: req.body.maxStudents,
+    cost: req.body.cost,
+  };
+  Course.create(courseParams)
     .then((course) => {
       course;
       res.redirect("/courses");
@@ -74,4 +77,65 @@ exports.delete = (req, res, next) => {
       console.log(`Error deleting course by ID :${error.message}`);
       next();
     });
+};
+exports.respondJSON = (req, res) => {
+  res.json({
+    status: htppStatus.StatusCodes.OK,
+    data: res.locals,
+  });
+  console.log(res.locals);
+};
+exports.errorJSON = (req, res, next) => {
+  let errorObject;
+
+  if (error) {
+    errorObject = {
+      status: httpStatus.StatusCodes.INTERNAL_SERVER_ERROR,
+      message: error.message,
+    };
+  } else {
+    errorObject = {
+      status: httpStatus.StatusCodes.INTERNAL_SERVER_ERROR,
+      message: "Erreur inconnue",
+    };
+  }
+
+  res.json(errorObject);
+};
+exports.join = (req, res, next) => {
+  let courseId = req.params.id,
+    currentUser = req.user;
+
+  if (currentUser) {
+    User.findByIdAndUpdate(currentUser, {
+      $addToSet: {
+        courses: courseId,
+      },
+    })
+      .then(() => {
+        res.locals.success = true;
+        next();
+      })
+      .catch((err) => {
+        next(err);
+      });
+  } else {
+    next(new Error("User must log in"));
+  }
+};
+
+exports.filterUserCourses = (req, res, next) => {
+  let currentUser = res.locals.currentUser;
+  if (currentUser) {
+    let mappedCourses = res.locals.courses.map((course) => {
+      let userJoined = currentUser.courses.some((userCourse) => {
+        return userCourse.equals(course._id);
+      });
+      return Object.assign(course.toObject(), { joined: userJoined });
+    });
+    res.locals.courses = mappedCourses;
+    next();
+  } else {
+    next();
+  }
 };

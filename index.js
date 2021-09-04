@@ -4,13 +4,9 @@ const express = require("express"),
   connectFlash = require("connect-flash"),
   expressSessions = require("express-session"),
   cookieParser = require("cookie-parser"),
-  coursesController = require("./controllers/courseController"),
-  subscriberController = require("./controllers/subsciberController"),
-  userController = require("./controllers/userController"),
-  homeController = require("./controllers/homeController");
-User = require("./models/user");
+  router = require("./routes/index"),
+  User = require("./models/user");
 
-router = express.Router();
 const mongoose = require("mongoose");
 const passport = require("passport");
 const dbURL = "mongodb://localhost:27017/";
@@ -25,11 +21,11 @@ mongoose
 
 app.set("view engine", "pug");
 app.set("views", "./views");
-router.use(express.static("public"));
-router.use(express.urlencoded({ extended: false }));
-router.use(express.json());
-router.use(cookieParser("CuisineAdministration"));
-router.use(
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cookieParser("CuisineAdministration"));
+app.use(
   expressSessions({
     secret: "CuisineAdminstration",
     cookie: {
@@ -40,53 +36,22 @@ router.use(
   })
 );
 
-router.use(connectFlash());
+app.use(connectFlash());
 
-router.use(passport.initialize());
-router.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-router.use((req, res, next) => {
+app.use((req, res, next) => {
   res.locals.loggedIn = req.isAuthenticated();
-  console.log(res.locals.loggedIn);
   res.locals.currentUser = req.user;
   res.locals.flashMessages = req.flash();
   next();
 });
 
-router.get("/", homeController.index);
-router.get("/courses", coursesController.index);
-router.get("/courses/new", coursesController.new);
-router.post("/courses/create", coursesController.create);
-router.get("/courses/:id", coursesController.show);
-router.get("/courses/:id/edit", coursesController.edit);
-router.post("/courses/:id/update", coursesController.update);
-router.get("/courses/:id/delete", coursesController.delete);
-
-router.get("/subscribers", subscriberController.index);
-router.get("/subscribers/new", subscriberController.new);
-router.post("/subscribers/create", subscriberController.create);
-router.get("/subscribers/:id", subscriberController.show);
-router.get("/subscribers/:id/edit", subscriberController.edit);
-router.post("/subscribers/:id/update", subscriberController.update);
-router.get("/subscribers/:id/delete", subscriberController.delete);
-
-router.get("/users", userController.index);
-router.get("/users/new", userController.new);
-router.post("/users/create", userController.create);
-
-router.get("/users/login", userController.login);
-router.post("/users/login", userController.authenticate);
-router.get("/users/logout", userController.logout);
-router.get("/users/:id", userController.show);
-router.get("/users/:id/edit", userController.edit);
-router.post("/users/:id/update", userController.update);
-router.get("/users/:id/delete", userController.delete);
-
 app.use("/", router);
-
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
